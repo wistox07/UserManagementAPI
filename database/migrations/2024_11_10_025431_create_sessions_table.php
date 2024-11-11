@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string("user_agent");
             $table->string("auth_token");
             $table->boolean("is_deleted");
-            $table->integer("expires_at");
-            $table->timestamp("login_at");
-            $table->timestamp("logout_at");
-            $table->timestamp("last_activity");
+            $table->date("expires_at");
+            $table->date("login_at");
+            $table->date("logout_at")->nullable();
+            $table->date("last_activity");
             $table->integer("login_attempts");
         });
     }
