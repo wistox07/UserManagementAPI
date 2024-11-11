@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string("profile_picture");
             $table->date("birth");
             $table->enum('gender', ['m', 'f']); // 'm' para masculino, 'f' para femenino
-            $table->foreignId("created_by")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreignId("updated_by")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreignId("status_record_id")->constrained("status_records")->onDelete("cascade")->onUpdate("cascade");
+            $table->boolean("is_deleted");
+            $table->foreignId("created_by")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("updated_by")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("deleted_by")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }
