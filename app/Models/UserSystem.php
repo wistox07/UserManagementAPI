@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class UserSystem extends Model
 {
     use HasFactory;
+
+    public function sessions(){
+        return $this->hasMany(Session::class, "user_id","id");
+    }
 }

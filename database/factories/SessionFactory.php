@@ -25,7 +25,7 @@ class SessionFactory extends Factory
             "expires_at" => $this->faker->dateTimeBetween("2024-11-11", "2024-12-11"),
             "login_at" => now(),
             "last_activity" => now(),
-            "login_attempts" => $this->faker->randomElement([0, 1, 2, 3]),
+            "login_attempts" => $this->faker->randomElement([0, 1, 2]),
         ];
     }
 

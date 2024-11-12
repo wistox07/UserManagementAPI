@@ -45,7 +45,9 @@ class DatabaseSeeder extends Seeder
                 "user_id" => $user->id,
                 "system_id" => $system->id
             ]);
-            Session::factory()->create([]);
+            Session::factory()->create([
+                "user_system_id" => $userSystem->id
+            ]);
         });
     }
 }
