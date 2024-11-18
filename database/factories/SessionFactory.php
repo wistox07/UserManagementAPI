@@ -18,16 +18,19 @@ class SessionFactory extends Factory
     {
         return [
             "ip_adress" => $this->faker->ipv4(),
-            "mac_adress" => $this->faker->macAddress(),
             "user_agent" => $this->faker->userAgent(),
             "auth_token" => $this->faker->uuid(),
+            "is_active" => $this->faker->randomElement([true, false]),
             "is_deleted" => $this->faker->randomElement([true, false]),
             "expires_at" => $this->faker->dateTimeBetween("2024-11-11", "2024-12-11"),
-            "login_at" => now(),
+            "authenticated_at" => now(),
+            "accessed_at" => $this->faker->randomElement([now(), null]),
+            "logout_at" => $this->faker->randomElement([now(), null]),
             "last_activity" => now(),
             "login_attempts" => $this->faker->randomElement([0, 1, 2]),
         ];
     }
+
 
     /*
         Schema::create('sessions', function (Blueprint $table) {
