@@ -65,13 +65,9 @@ class AuthController extends Controller
                     'message' => 'La cuenta del usuario no está activa',
                 ], 403);
             }
-            
-            $customData = [
-                "user" => $user
-            ];
+
            
-            $token = JWTAuth::claims($customData)->fromUser($user);
-            //dd($token);
+            $token = JWTAuth::fromUser($user);
             $decodedToken = JWTAuth::setToken($token)->getPayload();
             $expiresAt = Carbon::createFromTimestamp($decodedToken['exp']); // Usamos Carbon para convertir el timestamp en una fecha
 
@@ -91,15 +87,10 @@ class AuthController extends Controller
             $session->login_attempts = 0;
             $session->save();
 
-
             return response()->json([
                 "success" => true,
                 "token" => $token
             ]);
-
-
-
-            //return $token;
 
         }catch(Throwable $ex){
             return response()->json([

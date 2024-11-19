@@ -21,11 +21,11 @@ return new class extends Migration
             $table->text("auth_token");
             $table->boolean("is_active");
             $table->boolean("is_deleted");
-            $table->date("expires_at");
-            $table->date("authenticated_at");
-            $table->date("accessed_at")->nullable();
-            $table->date("logout_at")->nullable();
-            $table->date("last_activity");
+            $table->dateTime("expires_at");
+            $table->dateTime("authenticated_at");
+            $table->dateTime("accessed_at")->nullable();
+            $table->dateTime("logout_at")->nullable();
+            $table->dateTime("last_activity");
             $table->integer("login_attempts");
         });
     }

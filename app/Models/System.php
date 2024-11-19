@@ -10,7 +10,7 @@ class System extends Model
     use HasFactory;
 
     public function users(){
-        return $this->belongsTo(User::class , "system_user","system_id","user_id");
+        return $this->belongsToMany(User::class , "user_systems","system_id","user_id");
 
     }
 }

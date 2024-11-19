@@ -58,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function systems(){
-        return $this->belongsTo(System::class , "system_user","user_id","system_id");
+        return $this->belongsToMany(System::class , "user_systems","user_id","system_id");
 
     }
 

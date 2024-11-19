@@ -30,22 +30,4 @@ class SessionFactory extends Factory
             "login_attempts" => $this->faker->randomElement([0, 1, 2]),
         ];
     }
-
-
-    /*
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId("user_system_id")->constrained("user_systems")->onDelete("cascade")->onUpdate("cascade");
-            $table->string("ip_adress");
-            $table->string("mac_adress");
-            $table->string("user_agent");
-            $table->string("auth_token");
-            $table->boolean("is_deleted");
-            $table->date("expires_at");
-            $table->date("login_at");
-            $table->date("logout_at")->nullable();
-            $table->date("last_activity");
-            $table->integer("login_attempts");
-        });
-    */
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\UserSystemController;
+use App\Models\UserSystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::prefix('v1')->group(function () {
-    Route::get('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::middleware('validate.token')->get('user/systems', [UserSystemController::class, 'getSystemsByUser']);
 });
+
+
