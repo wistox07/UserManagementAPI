@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\SystemResource;
 use Illuminate\Http\Request;
 use Throwable;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -14,11 +15,10 @@ class UserSystemController extends Controller
         try{
 
             $token = $request->header("token");
-            //dd($token);
-            //$token = JWTAuth::claims($customData)->fromUser($user);
             $user = JWTAuth::setToken($token)->authenticate();
-            return $user->systems;
-            //dd($result);
+            $systems = $user->systems()->select(["system_id","name","description"])->get();
+            
+            return SystemResource::collection($systems);
 
         }catch(Throwable $ex){
             return response()->json([
