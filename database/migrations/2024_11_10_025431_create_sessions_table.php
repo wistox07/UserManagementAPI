@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId("user_system_id")->nullable()->constrained("user_systems")->onDelete("cascade")->onUpdate("cascade");
             $table->string("ip_adress");
             $table->string("user_agent")->nullable();
-            $table->text("auth_token");
+            $table->text("auth_token")->nullable();
             $table->boolean("is_active");
             $table->boolean("is_deleted");
-            $table->dateTime("expires_at");
+            $table->dateTime("expires_at")->nullable();
             $table->dateTime("authenticated_at");
             $table->dateTime("accessed_at")->nullable();
             $table->dateTime("logout_at")->nullable();

@@ -26,7 +26,9 @@ class ValidateToken
             if(!$token){
                 return response()->json(['error' => 'Token no enviado'], 401);
             }
-            JWTAuth::setToken($token)->authenticate();
+            $user = JWTAuth::setToken($token)->authenticate();
+            
+
 
         }catch (TokenExpiredException $e) {
             return response()->json(['error' => 'Token expirado'], 401);

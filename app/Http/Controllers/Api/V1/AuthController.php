@@ -67,25 +67,35 @@ class AuthController extends Controller
             }
 
            
-            $token = JWTAuth::fromUser($user);
-            $decodedToken = JWTAuth::setToken($token)->getPayload();
-            $expiresAt = Carbon::createFromTimestamp($decodedToken['exp']); // Usamos Carbon para convertir el timestamp en una fecha
-
-
+           
             $session = new Session();
             $session->user_system_id = null;
             $session->ip_adress = $request->ip();
             $session->user_agent = $request->header('User-Agent');
-            $session->auth_token = $token;
+            $session->auth_token = null;
             $session->is_active = true;
             $session->is_deleted = false;
-            $session->expires_at = $expiresAt;
+            $session->expires_at = null;
             $session->authenticated_at = now();
             $session->accessed_at = null;
             $session->logout_at = null;
             $session->last_activity = now();
             $session->login_attempts = 0;
             $session->save();
+
+            $customClaims = [
+                'session_id' => $session->id,
+            ];
+            $token = JWTAuth::claims($customClaims)->fromUser($user);
+
+
+            $decodedToken = JWTAuth::setToken($token)->getPayload();
+            $expiresAt = Carbon::createFromTimestamp($decodedToken['exp']); // Usamos Carbon para convertir el timestamp en una fecha
+           
+            $session->auth_token = $token;
+            $session->expires_at = $expiresAt;
+            $session->save();
+
 
             return response()->json([
                 "success" => true,
