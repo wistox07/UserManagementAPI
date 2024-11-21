@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Session;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
@@ -26,8 +27,20 @@ class ValidateToken
             if(!$token){
                 return response()->json(['error' => 'Token no enviado'], 401);
             }
-            $user = JWTAuth::setToken($token)->authenticate();
+            JWTAuth::setToken($token)->authenticate();
             
+            $decodedToken = JWTAuth::setToken($token)->getPayload()->toArray();
+            $sessionId = $decodedToken["session_id"];
+
+            $isActive = Session::where("id",$sessionId)->value("is_active");
+            if(!$isActive){
+
+                return response()->json([
+                    'error' => 'Sesión caduca'
+                ], 401); // Código HTTP 401 para sesión caducada
+            }
+
+
 
 
         }catch (TokenExpiredException $e) {
@@ -35,7 +48,7 @@ class ValidateToken
         } catch (TokenInvalidException $e) {
             return response()->json(['error' => 'Token invalido'], 401);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Token error: ' . $e->getMessage()], 401);
+            return response()->json(['error' =>  $e->getMessage()], 401);
         }
         
         return $next($request);
