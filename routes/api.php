@@ -24,9 +24,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::prefix('v1')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
 
-    Route::middleware('validate.token')->get('user/systems', [UserSystemController::class, 'getSystemsByUser']);
+    Route::prefix("auth")->group(function (){
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('register', [AuthController::class, 'register']);
+
+        Route::middleware("validate.token")->group(function(){
+            Route::post('chosee_system', [AuthController::class, 'choseeSystem']);
+        });
+    });
+
+    Route::middleware("validate.token")->group(function(){
+        Route::get('user/systems', [UserSystemController::class, 'getSystemsByToken']);
+        Route::get('user/{id}/systems', [UserSystemController::class, 'getSystemsByUser']);
+
+    });
+
+
+
+
+
 });
 
 

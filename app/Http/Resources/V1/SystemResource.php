@@ -15,10 +15,10 @@ class SystemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "system_id" => $this->system_id,
+            "user_system_id" => $this->user_system_id,
             "name" => $this->name,
             "description" => $this->description,
-            "url" => $this->url
+            "url" => $this->url ?? ''
         ];
     }
 }

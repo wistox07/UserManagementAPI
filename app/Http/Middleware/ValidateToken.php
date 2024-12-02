@@ -34,15 +34,10 @@ class ValidateToken
 
             $isActive = Session::where("id",$sessionId)->value("is_active");
             if(!$isActive){
-
                 return response()->json([
                     'error' => 'Sesión caduca'
                 ], 401); // Código HTTP 401 para sesión caducada
             }
-
-
-
-
         }catch (TokenExpiredException $e) {
             return response()->json(['error' => 'Token expirado'], 401);
         } catch (TokenInvalidException $e) {
@@ -50,9 +45,6 @@ class ValidateToken
         } catch (Exception $e) {
             return response()->json(['error' =>  $e->getMessage()], 401);
         }
-        
         return $next($request);
-   
-
     }
 }
