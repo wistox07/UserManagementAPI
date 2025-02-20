@@ -202,7 +202,7 @@ class AuthController extends Controller
                 return response()->json([
                     "error" => "Recurso no encontrado",
                     "message" => "No fue posible obtener la session_id almacenada en el token"
-                ],404);
+                ],400);
             }
 
             $session = Session::find($sessionId);
